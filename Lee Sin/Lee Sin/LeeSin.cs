@@ -1340,7 +1340,7 @@ namespace Lee_Sin
             var wardFlashBool = GetBool("expwardflash", typeof (bool));
 
             if (Player.ServerPosition.Distance(target.ServerPosition) < 250 || target.Distance(Player) > 1000
-                || !canwardflash || !canwardflash)
+                || !canwardflash || !CanWardFlash(target))
                 return;
 
             //if ((Environment.TickCount - _lastqcasted1 <= 250) &&
@@ -1348,7 +1348,7 @@ namespace Lee_Sin
             //    return;
 
 
-            if (Environment.TickCount -_lastwcasted > 1000   &&
+            if (Environment.TickCount -_lastwcasted > 1000 &&
                 ((Player.Position.Distance(target.Position) > 300 ||
                  (minionss != null))))
             {

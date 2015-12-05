@@ -1335,7 +1335,7 @@ namespace Lee_Sin
                 }
             }
 
-            var wardtotargetpos = Player.ServerPosition.Extend(target.ServerPosition, Player.Distance(target) - 250);
+            var wardtotargetpos = Player.Position.Extend(target.Position, Player.Distance(target) - 250);
             var wardFlashBool = GetBool("expwardflash", typeof (bool));
 
             if (slot == null || !W.IsReady() ||
@@ -1347,7 +1347,7 @@ namespace Lee_Sin
             //    (Environment.TickCount - _lastflashward >= 1500)) return;
                 
 
-            if (Environment.TickCount -_lastwcasted > 1000 &&
+            if (
                 ((Player.Position.Distance(target.Position) > 300) ||
                  (minionss != null)))
             {

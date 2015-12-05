@@ -1347,7 +1347,7 @@ namespace Lee_Sin
             //    (Environment.TickCount - _lastflashward >= 1500)) return;
                 
 
-            if (
+            if (Environment.TickCount -_lastwcasted > 1000 &&
                 ((Player.Position.Distance(target.Position) > 300) ||
                  (minionss != null)))
             {
@@ -1426,7 +1426,7 @@ namespace Lee_Sin
                             x.Name.ToLower().Contains("ward"));
 
             var ward = Items.GetWardSlot();
-            if (W.IsReady() && ward != null && Environment.TickCount - _lastwcasted > 400 && W1() && objectss == null)
+            if (W.IsReady() && ward != null && Environment.TickCount - _lastwcasted > 400 && W1())
             {
                 {
                     Player.Spellbook.CastSpell(ward.SpellSlot, position);

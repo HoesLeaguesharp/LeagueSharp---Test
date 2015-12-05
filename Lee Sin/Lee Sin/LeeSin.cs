@@ -1270,7 +1270,7 @@ namespace Lee_Sin
                         x =>
                             x != null &&
                             (x.Distance(target) < 420 || (x.Distance(poss) < 600 ||
-                             (canwardflash && x.Distance(Player) < 800)) && x.Health > Q.GetDamage(x) + 5 && !x.IsDead &&
+                             (canwardflash && x.Distance(target) < 800)) && x.Health > Q.GetDamage(x) + 5 && !x.IsDead &&
                             Q.GetPrediction(x).CollisionObjects.Count == 0 && x.Distance(Player) < Q.Range)))
             {
                 minionss = (Obj_AI_Base) min;

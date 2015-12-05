@@ -1347,7 +1347,7 @@ namespace Lee_Sin
                 
 
             if (Environment.TickCount - _wardjumpedto > 1000 &&
-                ((Player.Position.Distance(target.Position) > 600) ||
+                (
                  (minionss != null && minionss.Distance(Player) > 600 && minionss.HasBuff("blindmonkqtwo"))))
             {
                 WardJump(wardtotargetpos, false, false);

@@ -315,6 +315,7 @@ namespace Lee_Sin
                 _lastqcasted1 = Environment.TickCount;
             }
 
+
             if (args.Slot == Player.GetSpellSlot("summonerflash") && GetBool("wardinsec", typeof(KeyBind)))
             {
                 _processr = true;
@@ -1348,7 +1349,7 @@ namespace Lee_Sin
             //    return;
 
 
-            if (Environment.TickCount -_lastwcasted > 1000 &&
+            if (Environment.TickCount -_lastwcasted > 1000 && HasFlash() &&
                 ((Player.Position.Distance(target.Position) > 300) ||
                  (minionss != null)))
             {

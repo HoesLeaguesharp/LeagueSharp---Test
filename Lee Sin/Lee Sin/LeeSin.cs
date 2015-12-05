@@ -1299,7 +1299,7 @@ namespace Lee_Sin
                 canwardflash = true;
             }
 
-            if (target.HasBuff("blindmonkqtwo") || Environment.TickCount - _lastqcasted1 < 1500)
+            if (target.HasBuff("blindmonkqtwo") || Environment.TickCount - _lastqcasted1 < 250)
             {
                 canwardflash = false;
             }

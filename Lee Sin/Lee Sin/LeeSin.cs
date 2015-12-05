@@ -1348,7 +1348,7 @@ namespace Lee_Sin
                 
 
             if (Environment.TickCount -_lastwcasted > 1000 &&
-                ((Player.Position.Distance(target.Position) > 400) ||
+                ((Player.Position.Distance(target.Position) > 300) ||
                  (minionss != null)))
             {
                 WardJump(wardtotargetpos, false, false);

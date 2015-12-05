@@ -1426,11 +1426,10 @@ namespace Lee_Sin
                             x.Name.ToLower().Contains("ward"));
 
             var ward = Items.GetWardSlot();
-            if (W.IsReady() && ward != null && Environment.TickCount - _lastward > 400 && W1() && objectss == null)
+            if (W.IsReady() && ward != null && Environment.TickCount - _lastwcasted > 400 && W1() && objectss == null)
             {
                 {
                     Player.Spellbook.CastSpell(ward.SpellSlot, position);
-                    _lastward = Environment.TickCount;
                 }
             }
 

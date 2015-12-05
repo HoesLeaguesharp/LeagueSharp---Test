@@ -1339,14 +1339,13 @@ namespace Lee_Sin
             var wardtotargetpos = Player.Position.Extend(target.Position, Player.Distance(target) - 250);
             var wardFlashBool = GetBool("expwardflash", typeof (bool));
 
-            if (slot == null || !W.IsReady() ||
-                !(Player.ServerPosition.Distance(target.ServerPosition) > 350) || !(target.Distance(Player) < 1000) ||
-                 !wardFlashBool || !canwardflash || !R.IsReady())
+            if (Player.ServerPosition.Distance(target.ServerPosition) < 250 || target.Distance(Player) > 1000
+                || !canwardflash || !canwardflash)
                 return;
 
-            if ((Environment.TickCount - _lastqcasted1 <= 300) &&
-                (col.Count <= 0 || Q2() || Q.IsReady()))
-                return;
+            //if ((Environment.TickCount - _lastqcasted1 <= 250) &&
+            //    (col.Count <= 0))
+            //    return;
 
 
             if (Environment.TickCount -_lastwcasted > 1000   &&
@@ -1395,13 +1394,10 @@ namespace Lee_Sin
 
         public static bool CanWardFlash(Obj_AI_Hero target)
         {
-            var qpred = Q.GetPrediction(target);
-
-            var col = qpred.CollisionObjects;
             var wardFlashBool = GetBool("expwardflash", typeof(bool));
             var slot = Items.GetWardSlot();
 
-            return slot != null && HasFlash() && W.IsReady() && Player.Distance(target) > 350 &&
+            return slot != null && HasFlash() && W.IsReady() &&
                    R.IsReady() && wardFlashBool ;
         }
 

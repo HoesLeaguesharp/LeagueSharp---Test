@@ -1267,7 +1267,7 @@ namespace Lee_Sin
                 MinionManager.GetMinions(Player.Position, Q.Range, MinionTypes.All, MinionTeam.NotAllyForEnemy)
                     .Where(
                         x => 
-                            x != null && (x.Distance(target) < 500 || x.Distance(poss) < 600 || canwardflash) && x.Health > Q.GetDamage(x) + 5 && !x.IsDead &&
+                            x != null && (x.Distance(Player) < 700 || x.Distance(poss) < 600 || canwardflash) && x.Health > Q.GetDamage(x) + 5 && !x.IsDead &&
                             Q.GetPrediction(x).CollisionObjects.Count == 0 && x.Distance(Player) < Q.Range)
                     .OrderByDescending(x => x.Distance(target))) 
             {

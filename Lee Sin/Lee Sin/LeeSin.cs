@@ -109,6 +109,21 @@ namespace Lee_Sin
             Obj_AI_Base.OnProcessSpellCast += OnSpellcast;
             Spellbook.OnCastSpell += OnSpell;
             Game.OnWndProc += OnWndProc;
+            Interrupter2.OnInterruptableTarget += OnInterrupter;
+        }
+
+        private static void OnInterrupter(Obj_AI_Hero sender, Interrupter2.InterruptableTargetEventArgs args)
+        {
+            if (!sender.IsEnemy) return;
+            var wardtotargetpos = Player.Position.Extend(sender.Position, Player.Distance(sender) - 250);
+            if (sender.Distance(Player) < 1000)
+            {
+                WardJump(wardtotargetpos, false);
+            }
+            if (sender.Distance(Player) < R.Range)
+            {
+                R.Cast(sender);
+            }
         }
 
         private static void OnDoCast(Obj_AI_Base sender, GameObjectProcessSpellCastEventArgs args)

@@ -1341,7 +1341,7 @@ namespace Lee_Sin
 
             if (slot == null || !W.IsReady() ||
                 !(Player.ServerPosition.Distance(target.ServerPosition) > 350) || !(target.Distance(Player) < 1000) ||
-                 !wardFlashBool)
+                 !wardFlashBool || !canwardflash || !R.IsReady())
                 return;
 
             if ((Environment.TickCount - _lastqcasted1 <= 300) &&

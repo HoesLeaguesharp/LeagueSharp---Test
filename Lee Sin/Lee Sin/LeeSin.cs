@@ -1267,7 +1267,7 @@ namespace Lee_Sin
                 MinionManager.GetMinions(Player.Position, Q.Range, MinionTypes.All, MinionTeam.NotAllyForEnemy)
                     .Where(
                         x => 
-                            x != null && (x.Distance(Player) < 700 || x.Distance(poss) < 600 || canwardflash) && x.Health > Q.GetDamage(x) + 5 && !x.IsDead &&
+                            x != null && (x.Distance(Player) < 420 || x.Distance(poss) < 600 || (canwardflash && x.Distance(Player) < 800)) && x.Health > Q.GetDamage(x) + 5 && !x.IsDead &&
                             Q.GetPrediction(x).CollisionObjects.Count == 0 && x.Distance(Player) < Q.Range)
                     .OrderByDescending(x => x.Distance(target))) 
             {
@@ -1340,12 +1340,13 @@ namespace Lee_Sin
 
             if (slot == null || !W.IsReady() ||
                 !(Player.ServerPosition.Distance(target.ServerPosition) > 350) || !(target.Distance(Player) < 1000) ||
-                 !wardFlashBool) return;
+                 !wardFlashBool || !canwardflash) return;
 
             //if ((Environment.TickCount - _lastqcasted <= 1000) &&
             //    (col.Count <= 0 || Q2() || Environment.TickCount - _lastqcasted <= 1000 || Q.IsReady()) &&
-            //    (Environment.TickCount - _lastflashward >= 1500)) return;
-                
+            //    (Environment.TickCount - _lastflashward >= 1500))
+            //    return;
+
 
             if (Environment.TickCount -_lastwcasted > 1000 &&
                 ((Player.Position.Distance(target.Position) > 300) ||

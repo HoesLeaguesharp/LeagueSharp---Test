@@ -1339,13 +1339,14 @@ namespace Lee_Sin
             var wardtotargetpos = Player.Position.Extend(target.Position, Player.Distance(target) - 250);
             var wardFlashBool = GetBool("expwardflash", typeof (bool));
 
-            //if (slot == null || !W.IsReady() ||
-            //    !(Player.ServerPosition.Distance(target.ServerPosition) > 350) || !(target.Distance(Player) < 1000) ||
-            //     !wardFlashBool || !canwardflash) return;
+            if (slot == null || !W.IsReady() ||
+                !(Player.ServerPosition.Distance(target.ServerPosition) > 350) || !(target.Distance(Player) < 1000) ||
+                 !wardFlashBool)
+                return;
 
-            //if ((Environment.TickCount - _lastqcasted1 <= 300) &&
-            //    (col.Count <= 0 || Q2() || Q.IsReady()))
-            //    return;
+            if ((Environment.TickCount - _lastqcasted1 <= 300) &&
+                (col.Count <= 0 || Q2() || Q.IsReady()))
+                return;
 
 
             if (Environment.TickCount -_lastwcasted > 1000   &&

@@ -1267,13 +1267,13 @@ namespace Lee_Sin
             foreach (var min in
                 MinionManager.GetMinions(Player.Position, Q.Range, MinionTypes.All, MinionTeam.NotAllyForEnemy)
                     .Where(
-                        x => 
-                            x != null && (x.Distance(Player) < 420 || x.Distance(poss) < 600 || (canwardflash && x.Distance(Player) < 800)) && x.Health > Q.GetDamage(x) + 5 && !x.IsDead &&
-                            Q.GetPrediction(x).CollisionObjects.Count == 0 && x.Distance(Player) < Q.Range)
-                    .OrderByDescending(x => x.Distance(target))) 
+                        x =>
+                            x != null &&
+                            (x.Distance(target) < 420 || (x.Distance(poss) < 600 ||
+                             (canwardflash && x.Distance(Player) < 800)) && x.Health > Q.GetDamage(x) + 5 && !x.IsDead &&
+                            Q.GetPrediction(x).CollisionObjects.Count == 0 && x.Distance(Player) < Q.Range)))
             {
                 minionss = (Obj_AI_Base) min;
-                if (min == null) continue;
                 Render.Circle.DrawCircle(min.Position, 80, Color.Yellow, 5, true);
                 if (Q1() && Q.IsReady())
                 {

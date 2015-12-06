@@ -1246,11 +1246,6 @@ namespace Lee_Sin
         #endregion
 
         #region Ward Insec
-        public static int EndTime { get; private set; }
-​
-        public static bool IsActive { get; private set; }
-​
-        public static int StartTime { get; private set; }
 
         public static bool LastQ(Obj_AI_Hero target)
         {

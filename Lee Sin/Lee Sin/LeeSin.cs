@@ -285,7 +285,7 @@ namespace Lee_Sin
 
                 if (target != null)
                 {
-                    if (Steps == steps.Flash || (Environment.TickCount - _lastflashward < 2000 && _wardjumpedtotarget))
+                    if (Steps == steps.Flash || (Environment.TickCount - _lastflashward < 2000 && _wardjumpedtotarget) || Environment.TickCount - lastflashoverprio < 1300)
                     {
                         if (GetBool("wardinsec", typeof (KeyBind)) || GetBool("starcombo", typeof (KeyBind)))
                         {
@@ -1264,8 +1264,8 @@ namespace Lee_Sin
 
             if (minionss != null)
             return Environment.TickCount - lastq > 2000 && minionss.Distance(Player) > 400;
-            else
-                return Environment.TickCount - lastq > 2000;
+
+            return Environment.TickCount - lastq > 2000;
         }
 
         private static void Wardinsec()
@@ -1288,7 +1288,7 @@ namespace Lee_Sin
             var col = qpred.CollisionObjects;
 
             var slot = Items.GetWardSlot();
-         Game.PrintChat(LastQ(target).ToString());
+            Game.PrintChat(LastQ(target).ToString());
             #endregion
 
             if (Player.Distance(target) > 500)
@@ -1357,7 +1357,7 @@ namespace Lee_Sin
             if ((!W.IsReady() || W2()) && !GetBool("prioflash", typeof(bool)) && Environment.TickCount - _junglelastw > 1000 &&
                 Environment.TickCount - _lastwcasted > 1000 )
             {
-                Steps = steps.Flash;
+                lastflashoverprio = Environment.TickCount;
                 if (R.IsReady())
                 {   
                     R.Cast(target);
@@ -1555,6 +1555,7 @@ namespace Lee_Sin
         private static int lastr;
         private static int lastq;
         private static bool buff;
+        private static int lastflashoverprio;
 
         private static void AutoSmite()
         {

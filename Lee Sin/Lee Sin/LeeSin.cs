@@ -1246,18 +1246,23 @@ namespace Lee_Sin
         #endregion
 
         #region Ward Insec
+        public static int EndTime { get; private set; }
+​
+        public static bool IsActive { get; private set; }
+​
+        public static int StartTime { get; private set; }
 
         public static bool LastQ(Obj_AI_Hero target)
         {
-            if (target.HasBuff("leesingqtwobuff") && !buff)
+            if (buff)
             {
                 lastq = Environment.TickCount;
-                buff = true;
+                buff = false;
             }
 
-            if (!target.HasBuff("leesinqtwobuff"))
+            if (target.HasBuff("blindmonkqtwo") && Q2() && Environment.TickCount - lastq > 2000)
             {
-                buff = false;
+                buff = true;
             }
 
             return Environment.TickCount - lastq > 2000 && minionss.Distance(Player) > 400;
@@ -1283,7 +1288,7 @@ namespace Lee_Sin
             var col = qpred.CollisionObjects;
 
             var slot = Items.GetWardSlot();
-
+            Game.PrintChat(LastQ(target).ToString());
             #endregion
 
             if (Player.Distance(target) > 500)

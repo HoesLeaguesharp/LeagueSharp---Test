@@ -83,7 +83,7 @@ namespace Lee_Sin
 
         internal static void Load(EventArgs args)
         {
-            if (Player.ChampionName != "LeeSin") return;
+       //     if (Player.ChampionName != "LeeSin") return;
             MenuConfig.OnLoad();
             Q = new Spell(SpellSlot.Q, 1050);
             W = new Spell(SpellSlot.W, 700);
@@ -1249,6 +1249,8 @@ namespace Lee_Sin
 
         public static bool LastQ(Obj_AI_Hero target)
         {
+            if (target == null) return false;
+            
             if (buff)
             {
                 lastq = Environment.TickCount;
@@ -1260,7 +1262,10 @@ namespace Lee_Sin
                 buff = true;
             }
 
+            if (minionss != null)
             return Environment.TickCount - lastq > 2000 && minionss.Distance(Player) > 400;
+            else
+                return Environment.TickCount - lastq > 2000;
         }
 
         private static void Wardinsec()
@@ -1283,7 +1288,7 @@ namespace Lee_Sin
             var col = qpred.CollisionObjects;
 
             var slot = Items.GetWardSlot();
-        //    Game.PrintChat(LastQ(target).ToString());
+         Game.PrintChat(LastQ(target).ToString());
             #endregion
 
             if (Player.Distance(target) > 500)

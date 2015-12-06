@@ -1247,6 +1247,22 @@ namespace Lee_Sin
 
         #region Ward Insec
 
+        public static bool LastQ(Obj_AI_Hero target)
+        {
+            if (target.HasBuff("leesingqtwobuff") && !buff)
+            {
+                lastq = Environment.TickCount;
+                buff = true;
+            }
+
+            if (!target.HasBuff("leesinqtwobuff"))
+            {
+                buff = false;
+            }
+
+            return Environment.TickCount - lastq > 2000 && minionss.Distance(Player) > 400;
+        }
+
         private static void Wardinsec()
         {
             #region Target, Slots, Prediction
@@ -1259,17 +1275,6 @@ namespace Lee_Sin
                 target = TargetSelector.GetSelectedTarget() == null ? target : TargetSelector.SelectedTarget;
             }
            // if (!R.IsReady() && Environment.TickCount - lastr > 2000) return;
-
-            if (target.HasBuff("leesingqtwobuff") && !buff)
-            {
-                lastq = Environment.TickCount;
-                buff = true;
-            }
-
-            if (!target.HasBuff("leesinqtwobuff"))
-            {
-                buff = false;
-            }
 
             if (target == null) return;
 
@@ -1395,7 +1400,7 @@ namespace Lee_Sin
                 || !CanWardFlash(target))
                 return;
 
-            if ((!Q.IsReady() && Environment.TickCount - _lastqcasted > 800) || col.Count > 0)
+            if (LastQ(target) || col.Count > 0)
             {
                 if (Player.Distance(target) < 500) return;
 

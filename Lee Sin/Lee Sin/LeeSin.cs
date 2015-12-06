@@ -285,7 +285,7 @@ namespace Lee_Sin
 
                 if (target != null)
                 {
-                    if (Steps == steps.Flash || (Environment.TickCount - _lastflashward < 2000 && _wardjumpedtotarget) || )
+                    if (Steps == steps.Flash || (Environment.TickCount - _lastflashward < 2000 && _wardjumpedtotarget))
                     {
                         if (GetBool("wardinsec", typeof (KeyBind)) || GetBool("starcombo", typeof (KeyBind)))
                         {
@@ -1354,13 +1354,12 @@ namespace Lee_Sin
                     R.Cast(target);
             }
 
-            if ((!W.IsReady() || W2()) && !GetBool("prioflash", typeof(bool)) && Environment.TickCount - _junglelastw > 1200 &&
-                Environment.TickCount - _lastwcasted > 1200 )
+            if ((!W.IsReady() || W2()) && !GetBool("prioflash", typeof(bool)) && Environment.TickCount - _junglelastw > 1000 &&
+                Environment.TickCount - _lastwcasted > 1000 )
             {
-
+                Steps = steps.Flash;
                 if (R.IsReady())
                 {   
-                    Steps = steps.Flash;
                     R.Cast(target);
                 }
             }

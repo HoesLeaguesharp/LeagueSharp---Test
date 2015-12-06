@@ -1283,7 +1283,7 @@ namespace Lee_Sin
             var col = qpred.CollisionObjects;
 
             var slot = Items.GetWardSlot();
-            Game.PrintChat(LastQ(target).ToString());
+        //    Game.PrintChat(LastQ(target).ToString());
             #endregion
 
             if (Player.Distance(target) > 500)

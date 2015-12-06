@@ -286,7 +286,7 @@ namespace Lee_Sin
                 if (target != null)
                 {
                     if (Steps == steps.Flash || (Environment.TickCount - _lastflashward < 2000 && _wardjumpedtotarget) ||
-                        Environment.TickCount - lastflashoverprio < 1300) 
+                        Environment.TickCount - lastflashoverprio < 3000) 
                     {
                         if (GetBool("wardinsec", typeof (KeyBind)) || GetBool("starcombo", typeof (KeyBind)))
                         {
@@ -921,7 +921,7 @@ namespace Lee_Sin
 
             var useq = GetBool("useqh", typeof (bool));
             var usee = GetBool("useeh", typeof (bool));
-            var useQ2 = GetBool("useQ2()h", typeof (bool));
+            var useQ2 = GetBool("useq2h", typeof (bool));
             var delay = GetValue("secondqdelayh");
             var target = TargetSelector.GetTarget(Q.Range, TargetSelector.DamageType.Physical);
             if (!target.IsValidTarget())
@@ -1263,7 +1263,7 @@ namespace Lee_Sin
                 buff = true;
             }
 
-            if (minionss.IsValidTarget())
+            if (minionss.IsValidTarget() && minionss.HasBuff("blindmonkqtwo"))
             return Environment.TickCount - lastq > 2000 && minionss.Distance(Player) > 400;
             else
             return Environment.TickCount - lastq > 2000;
@@ -1355,14 +1355,11 @@ namespace Lee_Sin
                     R.Cast(target);
             }
 
-            if ((!W.IsReady() || W2()) && !GetBool("prioflash", typeof(bool)) && Environment.TickCount - _junglelastw > 1000 &&
+            if ((!W.IsReady() || W2()) && !GetBool("prioflash", typeof(bool)) &&
                 Environment.TickCount - _lastwcasted > 1000 )
             {
                 lastflashoverprio = Environment.TickCount;
-                if (R.IsReady())
-                {   
                     R.Cast(target);
-                }
             }
 
             #region Determine if we want to flash or ward jump

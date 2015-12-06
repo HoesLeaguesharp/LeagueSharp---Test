@@ -285,7 +285,8 @@ namespace Lee_Sin
 
                 if (target != null)
                 {
-                    if (Steps == steps.Flash || (Environment.TickCount - _lastflashward < 2000 && _wardjumpedtotarget) || Environment.TickCount - lastflashoverprio < 1300)
+                    if (Steps == steps.Flash || (Environment.TickCount - _lastflashward < 2000 && _wardjumpedtotarget) ||
+                        Environment.TickCount - lastflashoverprio < 1300) 
                     {
                         if (GetBool("wardinsec", typeof (KeyBind)) || GetBool("starcombo", typeof (KeyBind)))
                         {
@@ -1262,9 +1263,9 @@ namespace Lee_Sin
                 buff = true;
             }
 
-            if (minionss != null)
+            if (minionss.IsValidTarget())
             return Environment.TickCount - lastq > 2000 && minionss.Distance(Player) > 400;
-
+            else
             return Environment.TickCount - lastq > 2000;
         }
 

@@ -26,9 +26,10 @@ namespace Lee_Sin.WardManager
                 Player.Spellbook.CastSpell(ward.SpellSlot, position);
             }
 
-            if (W.IsReady() && ward != null && W1() && use && Environment.TickCount - wardlastcasted > 400)
+            if (W.IsReady() && ward != null && W1() && use && Environment.TickCount - Lastcastedw > 400)
             {
                 Player.Spellbook.CastSpell(ward.SpellSlot, position);
+                LeeSin.Lastcastedw = Environment.TickCount;
             }
 
             var objects =

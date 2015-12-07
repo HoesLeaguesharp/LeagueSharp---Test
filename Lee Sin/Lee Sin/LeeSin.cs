@@ -285,12 +285,14 @@ namespace Lee_Sin
 
                 if (target != null)
                 {
+                    var pos = InsecFlash(target, 230);
+                    if (Player.Distance(pos) < 100) return;
                     if (Steps == steps.Flash || (Environment.TickCount - _lastflashward < 2000 && _wardjumpedtotarget) ||
                         Environment.TickCount - lastflashoverprio < 3000) 
                     {
                         if (GetBool("wardinsec", typeof (KeyBind)) || GetBool("starcombo", typeof (KeyBind)))
                         {
-                            var pos = InsecFlash(target, 230);
+                           
                             var poss = Player.Position.Extend(target.Position,
                                 +target.Position.Distance(Player.Position) + 230);
 
@@ -1248,7 +1250,7 @@ namespace Lee_Sin
 
         #region Ward Insec
 
-        public static bool LastQ(Obj_AI_Hero target)
+        public static bool LastQ(Obj_AI_Hero target, bool includeMinions = true)
         {
             if (target == null) return false;
             
@@ -1263,7 +1265,7 @@ namespace Lee_Sin
                 buff = true;
             }
 
-            if (minionss.IsValidTarget() && minionss.HasBuff("blindmonkqtwo"))
+            if (minionss.IsValidTarget() && minionss.HasBuff("blindmonkqtwo") && includeMinions)
             return Environment.TickCount - lastq > 2000 && minionss.Distance(Player) > 400;
             else
             return Environment.TickCount - lastq > 2000;
@@ -1356,7 +1358,7 @@ namespace Lee_Sin
             }
 
             if ((!W.IsReady() || W2()) && !GetBool("prioflash", typeof(bool)) &&
-                Environment.TickCount - _lastwcasted > 1000 )
+                Environment.TickCount - _lastwcasted > 1000 && LastQ(target))
             {
                 lastflashoverprio = Environment.TickCount;
                     R.Cast(target);

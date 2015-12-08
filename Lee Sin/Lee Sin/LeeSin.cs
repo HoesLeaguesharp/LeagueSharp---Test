@@ -206,7 +206,9 @@ namespace Lee_Sin
                 buff = false;
             }
 
-            if (target.HasBuff("blindmonkqtwo") && Q2() && Environment.TickCount - lastq > 2000)
+            if ((target.HasBuff("blindmonkqtwo") ||
+                 (minionss.HasBuff("blindmonkqtwo") && minionss.IsValidTarget() && includeMinions)) && Q2() &&
+                Environment.TickCount - lastq > 2000) 
             {
                 buff = true;
             }

@@ -76,6 +76,7 @@ namespace Lee_Sin
         public static int lastq;
         public static bool buff;
         public static int lastflashoverprio;
+        protected static int Lastcastedw;
 
         static LeeSin()
         {

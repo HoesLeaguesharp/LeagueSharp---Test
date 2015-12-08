@@ -144,7 +144,7 @@ namespace Lee_Sin.Insec
                 || !CanWardFlash(target))
                 return;
 
-            if (LastQ(target) || col.Count > 0)
+            if (LastQ(target))
             {
                 if (Player.Distance(target) < 500) return;
 

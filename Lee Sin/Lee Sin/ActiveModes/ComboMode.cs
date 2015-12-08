@@ -178,8 +178,8 @@ namespace Lee_Sin.ActiveModes
 
             if (user && target.IsValidTarget(R.Range) && R.IsReady())
             {
-                if (target.HasBuff("blindmonkqtwo") &&
-                    Q.GetDamage(target) > target.Health) return;
+                if(Q.GetDamage(target) > target.Health) return;
+
                 Game.PrintChat("firstcheck");
                 if (target.Health < Player.GetAutoAttackDamage(target) + 30) return;
                 Game.PrintChat("secondCheck");

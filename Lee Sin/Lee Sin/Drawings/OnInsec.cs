@@ -31,7 +31,7 @@ namespace Lee_Sin.Drawings
             var playerPositionExtend = starPosition.Extend(endPosition, linelength);
             var extendPlayerPos = Drawing.WorldToScreen(playerPositionExtend);
             var afterStartPosition = playerPositionExtend.Extend(starPosition,
-                playerPositionExtend.Distance(starPosition) - 200);
+                playerPositionExtend.Distance(starPosition) - 130);
             var starPos = Drawing.WorldToScreen(afterStartPosition);
             Drawing.DrawLine(starPos, extendPlayerPos, 1, arrowColor);
             var playerposextend = playerPositionExtend.Extend(starPosition, -130);

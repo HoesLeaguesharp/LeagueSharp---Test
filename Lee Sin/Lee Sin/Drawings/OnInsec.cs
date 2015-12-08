@@ -85,7 +85,7 @@ namespace Lee_Sin.Drawings
                     var pos22 = Drawing.WorldToScreen(objAiHero.Position);
                    // Drawing.DrawLine(pos11, pos22, 1, Color.Red);
                     Render.Circle.DrawCircle(objAiHero.Position, 140, Color.LightBlue, 2, true);
-                    Drawing.DrawText(pos22.X, pos22.Y, Color.LightBlue, "Position");
+                    Drawing.DrawText(pos22.X - 40, pos22.Y + 25, Color.LightBlue, "Position");
                     DrawArrow(target.Position, objAiHero.Position, 30, 500, 200, Color.LightBlue);
 
                 }
@@ -96,7 +96,7 @@ namespace Lee_Sin.Drawings
                    // var pos22 = Drawing.WorldToScreen(target.Position.Extend(Player.Position, distance));
                     var pos22 = Drawing.WorldToScreen(Player.Position);
                     Render.Circle.DrawCircle(Player.Position, 140, Color.LightBlue, 2, true);
-                    Drawing.DrawText(pos22.X, pos22.Y, Color.LightBlue, "Position");
+                    Drawing.DrawText(pos22.X - 40, pos22.Y + 25, Color.LightBlue, "Position");
                     DrawArrow(target.Position, Player.Position, 30, 500, 200, Color.LightBlue);
                 }
             }

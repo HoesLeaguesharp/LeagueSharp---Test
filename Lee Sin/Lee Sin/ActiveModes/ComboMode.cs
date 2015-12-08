@@ -166,9 +166,23 @@ namespace Lee_Sin.ActiveModes
                     }
                 }
             }
+            var poss = Player.ServerPosition.Extend(target.ServerPosition, 600);
+            if (!GetBool("wardjumpcombo1", typeof(bool))) return;
+
+            if (!E.IsReady() || !W.IsReady() || !(target.Distance(Player) > E.Range)) return;
+            if (!Q.IsReady() && Environment.TickCount - Q.LastCastAttemptT > 1000)
+            {
+                WardManager.WardJump.WardJumped(poss, false);
+            }
+
 
             if (user && target.IsValidTarget(R.Range) && R.IsReady())
             {
+                if (target.HasBuff("blindmonkqtwo") &&
+                    Q.GetDamage(target) > target.Health + Player.GetAutoAttackDamage(target) + 5) return;
+
+                if (Player.Health < Player.GetAutoAttackDamage(target) + 30) return;
+
                 if (Q.IsReady() &&
                     target.Health <= R.GetDamage(target) + GetQDamage(target) + Player.GetAutoAttackDamage(target) &&
                     Q.IsReady() && target.Health > GetQDamage(target))
@@ -187,14 +201,6 @@ namespace Lee_Sin.ActiveModes
                 Player.Spellbook.CastSpell(Smite, target);
             }
 
-            var poss = Player.ServerPosition.Extend(target.ServerPosition, 600);
-            if (!GetBool("wardjumpcombo1", typeof (bool))) return;
-
-            if (!E.IsReady() || !W.IsReady() || !(target.Distance(Player) > E.Range)) return;
-            if (!Q.IsReady() && Environment.TickCount - Q.LastCastAttemptT > 1000)
-            {
-                WardManager.WardJump.WardJumped(poss, false);
-            }
 
             #endregion
         }

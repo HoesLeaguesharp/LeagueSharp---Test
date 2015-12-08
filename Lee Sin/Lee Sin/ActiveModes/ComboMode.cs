@@ -166,6 +166,38 @@ namespace Lee_Sin.ActiveModes
                     }
                 }
             }
+
+            if (user && target.IsValidTarget(R.Range) && R.IsReady())
+            {
+                if (Q.GetDamage(target) + 70 < target.Health && target.HasBuff("blindmonkqtwo"))
+                {
+                    Game.PrintChat("firstcheck");
+                    if (target.Health > Player.GetAutoAttackDamage(target) + 30)
+                    {
+                        Game.PrintChat("secondCheck");
+                        if (Q.IsReady() &&
+                            target.Health <=
+                            R.GetDamage(target) + GetQDamage(target) + Player.GetAutoAttackDamage(target) &&
+                            Q.IsReady() && target.Health > GetQDamage(target))
+                        {
+                            R.Cast(target);
+                        }
+
+                        if (target.Health <= R.GetDamage(target) + Q.GetDamage(target) && Q.IsReady() &&
+                            Player.Mana > 30)
+                        {
+                            R.Cast(target);
+                        }
+                    }
+                }
+            }
+
+
+            if (Smite.IsReady() && target.Distance(Player) < 500 && smite && target.Health < ActiveModes.Smite.GetFuckingSmiteDamage())
+            {
+                Player.Spellbook.CastSpell(Smite, target);
+            }
+
             var poss = Player.ServerPosition.Extend(target.ServerPosition, 600);
             if (!GetBool("wardjumpcombo1", typeof(bool))) return;
 
@@ -174,33 +206,6 @@ namespace Lee_Sin.ActiveModes
             {
                 WardManager.WardJump.WardJumped(poss, false);
             }
-
-
-            if (user && target.IsValidTarget(R.Range) && R.IsReady())
-            {
-                if(Q.GetDamage(target) > target.Health) return;
-
-                Game.PrintChat("firstcheck");
-                if (target.Health < Player.GetAutoAttackDamage(target) + 30) return;
-                Game.PrintChat("secondCheck");
-                if (Q.IsReady() &&
-                    target.Health <= R.GetDamage(target) + GetQDamage(target) + Player.GetAutoAttackDamage(target) &&
-                    Q.IsReady() && target.Health > GetQDamage(target))
-                {
-                    R.Cast(target);
-                }
-
-                if (target.Health <= R.GetDamage(target) + Q.GetDamage(target) && Q.IsReady() && Player.Mana > 30)
-                {
-                    R.Cast(target);
-                }
-            }
-
-            if (Smite.IsReady() && target.Distance(Player) < 500 && smite && target.Health < ActiveModes.Smite.GetFuckingSmiteDamage())
-            {
-                Player.Spellbook.CastSpell(Smite, target);
-            }
-
 
             #endregion
         }

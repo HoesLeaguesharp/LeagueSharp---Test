@@ -95,7 +95,7 @@ namespace Lee_Sin.Drawings
                     var distance = target.Distance(Player);
                    // var pos22 = Drawing.WorldToScreen(target.Position.Extend(Player.Position, distance));
                     var pos22 = Drawing.WorldToScreen(Player.Position);
-                    Render.Circle.DrawCircle(Player.Position, 140, Color.Blue, 2, true);
+                    Render.Circle.DrawCircle(Player.Position, 140, Color.LightBlue, 2, true);
                     Drawing.DrawText(pos22.X, pos22.Y, Color.LightBlue, "Position");
                     DrawArrow(target.Position, Player.Position, 30, 500, 200, Color.LightBlue);
                 }

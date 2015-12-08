@@ -106,7 +106,7 @@ namespace Lee_Sin.Drawings
                 var distance = target.Distance(SelectedAllyAiMinion);
               //  var pos4 = Drawing.WorldToScreen(target.Position.Extend(SelectedAllyAiMinion.ServerPosition, distance));
                 var pos4 = Drawing.WorldToScreen(SelectedAllyAiMinion.Position);
-                Drawing.DrawText(pos4.X - 25, pos4.Y + 25, Color.LightBlue, "Position");
+                Drawing.DrawText(pos4.X - 25    , pos4.Y + 25, Color.LightBlue, "Position");
                 DrawArrow(target.Position, SelectedAllyAiMinion.Position, 30, 500, 200, Color.LightBlue);
             }
         }

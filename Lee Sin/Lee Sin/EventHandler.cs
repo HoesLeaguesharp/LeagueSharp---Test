@@ -95,7 +95,7 @@ namespace Lee_Sin
                     case "BlindMonkQOne":
                     case "blinkmonkqtwo":
                         _junglelastq = Environment.TickCount;
-                        _lastq2casted = Environment.TickCount
+                        LeeSin._lastq2casted = Environment.TickCount
                         break;
 
                     case "BlindMonkWOne":

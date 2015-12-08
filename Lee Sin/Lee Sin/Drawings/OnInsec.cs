@@ -59,7 +59,7 @@ namespace Lee_Sin.Drawings
 
             if (SelectedAllyAiMinion != null)
             {
-                Render.Circle.DrawCircle(SelectedAllyAiMinion.Position, 200, Color.Blue, 2, true);
+                Render.Circle.DrawCircle(SelectedAllyAiMinion.Position, 140, Color.LightBlue, 1, true);
             }
             
             var target = TargetSelector.GetTarget(2000, TargetSelector.DamageType.Physical);
@@ -84,7 +84,7 @@ namespace Lee_Sin.Drawings
                     var pos22 = Drawing.WorldToScreen(target.Position.Extend(objAiHero.Position, distance));
                    // Drawing.DrawLine(pos11, pos22, 1, Color.Red);
                     Render.Circle.DrawCircle(objAiHero.Position, 100, Color.Blue, 2, true);
-                    Drawing.DrawText(pos22.X, pos22.Y, Color.Black, "X");
+                    Drawing.DrawText(pos22.X, pos22.Y, Color.LightBlue, "Position");
                     DrawArrow(target.Position, objAiHero.Position, 30, 500, 200, Color.LightBlue);
 
                 }
@@ -102,11 +102,10 @@ namespace Lee_Sin.Drawings
 
             if (SelectedAllyAiMinion != null)
             {
-                var pos3 = Drawing.WorldToScreen(target.Position);
                 var distance = target.Distance(SelectedAllyAiMinion);
-                var pos4 = Drawing.WorldToScreen(target.Position.Extend(SelectedAllyAiMinion.Position, distance));
-                //Drawing.DrawLine(pos3, pos4, 1, Color.Red);
-                Drawing.DrawText(pos4.X, pos4.Y, Color.Black, "X");
+              //  var pos4 = Drawing.WorldToScreen(target.Position.Extend(SelectedAllyAiMinion.ServerPosition, distance));
+                var pos4 = Drawing.WorldToScreen(SelectedAllyAiMinion.Position);
+                Drawing.DrawText(pos4.X - 40, pos4.Y + 25, Color.LightBlue, "Position");
                 DrawArrow(target.Position, SelectedAllyAiMinion.Position, 30, 500, 200, Color.LightBlue);
             }
         }

@@ -24,7 +24,8 @@ namespace Lee_Sin
             TargetSelector.AddToMenu(targetSelectorMenu);
             Config.AddSubMenu(targetSelectorMenu);
             Orbwalker = new Orbwalking.Orbwalker(Config.SubMenu("Orbwalking"));
-
+            Config.AddItem(new MenuItem("PredictionMode", "PredictionMode"))
+                .SetValue(new StringList(new[] {"OktwPrediction", "Common Prediction"}));
             var combos = new Menu("Key Binds", "Key Binds");
             {
                 AddKeyBind(combos, "StarCombo", "starcombo", 'Z', KeyBindType.Press);
@@ -38,7 +39,6 @@ namespace Lee_Sin
                 AddBool(combos, "Prioritize Flash Over Ward", "prioflash");
                 AddBool(combos, "Ward -> Flash Insec", "expwardflash", false);
                 AddBool(combos, "Use Smite In Insec", "UseSmite");
-               // AddValue(combos, "R Flash Delay", "rflashdelay", 80, 0, 500);
             }
 
             var combo = new Menu("Combo Settings", "Combo Settings");
@@ -48,14 +48,14 @@ namespace Lee_Sin
                 AddValue(combo, "Use Second [Q] Delay", "secondqdelay", 500, 0, 2500);
                 AddBool(combo, "Use [E]", "usee");
                 AddBool(combo, "Use [R]", "user");
-                AddValue(combo, "Auto [R] On X targets", "autoron", 1, 1, 5);
-                //var rmenu = new Menu("Auto R on X Enemies", "autorxenemies");
-                //{
-                //    AddBool(rmenu, "Use ward", "xeward");
-                //    AddBool(rmenu, "Use flash", "xeflash");
-                //    AddValue(rmenu, "Min enemies hit", "xeminhit", 3, 2, 5);
-                //    combo.AddSubMenu(rmenu);
-                //}
+                AddValue(combo, "Auto [R] On X targets", "autoron", 1, 0, 5);
+                var rmenu = new Menu("Auto R on X Enemies", "autorxenemies");
+                {
+                    AddBool(rmenu, "Use ward", "xeward");
+                    AddBool(rmenu, "Use flash", "xeflash");
+                    AddValue(rmenu, "Min enemies hit", "enemiescount", 3, 0, 5);
+                    combo.AddSubMenu(rmenu);
+                }
                 AddBool(combo, "Use [W]", "wardjumpcombo");
                 AddBool(combo, "Use [W]ard Jump", "wardjumpcombo1");
                 AddBool(combo, "Use [Smite]", "usessmite");

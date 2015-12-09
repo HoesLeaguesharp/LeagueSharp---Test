@@ -133,9 +133,9 @@ namespace Lee_Sin.ActiveModes
                     Environment.TickCount - _lastwcombo > 300)
                 {
                     var qpred = Q.GetPrediction(target);
-                    if (Q.IsReady() && Q1() && qpred.Hitchance >= HitChance.High)
+                    if (Q.IsReady() && Q1())
                     {
-                        Q.Cast(target);
+                        OnUpdate.CastSpell(Q, target);
                         _lastqc = Environment.TickCount;
                     }
 
@@ -171,10 +171,10 @@ namespace Lee_Sin.ActiveModes
             {
                 if (Q.GetDamage(target) + 70 < target.Health)
                 {
-                    Game.PrintChat("firstcheck");
+                   // Game.PrintChat("firstcheck");
                     if (target.Health > Player.GetAutoAttackDamage(target) + 30)
                     {
-                        Game.PrintChat("secondCheck");
+                     //   Game.PrintChat("secondCheck");
                         if (Q.IsReady() &&
                             target.Health <=
                             R.GetDamage(target) + GetQDamage(target) + Player.GetAutoAttackDamage(target) &&
@@ -201,10 +201,10 @@ namespace Lee_Sin.ActiveModes
             var poss = Player.ServerPosition.Extend(target.ServerPosition, 600);
             if (!GetBool("wardjumpcombo1", typeof(bool))) return;
 
-            if (!E.IsReady() || !W.IsReady() || !(target.Distance(Player) > E.Range)) return;
+            if (!E.IsReady() || !W.IsReady() || !(target.Distance(Player) > E.Range) || !LastQ(target)) return;
             if (!Q.IsReady() && Environment.TickCount - Q.LastCastAttemptT > 1000)
             {
-                WardManager.WardJump.WardJumped(poss, false);
+                WardManager.WardJump.WardJumped(poss, true, true);
             }
 
             #endregion

@@ -5,7 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using LeagueSharp;
 using LeagueSharp.Common;
+using Lee_Sin.Misc;
 using SharpDX;
+using Color = System.Drawing.Color;
 
 namespace Lee_Sin
 {
@@ -14,6 +16,7 @@ namespace Lee_Sin
 
         public static void OnCreate(GameObject sender, EventArgs args)
         {
+
             if (!GetBool("wardinsec", typeof(KeyBind)) && !GetBool("starcombo", typeof(KeyBind)) &&
                 Orbwalker.ActiveMode != Orbwalking.OrbwalkingMode.Combo)
                 return;
@@ -88,6 +91,21 @@ namespace Lee_Sin
 
         public static void OnSpellcast(Obj_AI_Base sender, GameObjectProcessSpellCastEventArgs args)
         {
+            var getresults = BubbaKush.GetPositions(Player, 1125,(byte) GetValue("enemiescount"), HeroManager.Enemies.Where(x => x.Distance(Player) < 1200).ToList());
+            if (getresults.Count > 1)
+            {
+                if (!GetBool("xeflash", typeof (bool))) return; 
+                if (GetBool("wardinsec", typeof (KeyBind)) || Orbwalker.ActiveMode == Orbwalking.OrbwalkingMode.Combo)
+                    return;
+
+                var getposition = BubbaKush.SelectBest(getresults, Player);
+                if (args.SData.Name == "BlindMonkRKick")
+                {
+                    var poss = getposition;
+
+                    Player.Spellbook.CastSpell(Player.GetSpellSlot("SummonerFlash"), poss, true);
+                }
+            }
             if (sender.IsMe)
             {
                 switch (args.SData.Name)
@@ -109,9 +127,14 @@ namespace Lee_Sin
                 }
             }
 
-            if (args.SData.Name == "blindmonkqtwo")
+            if (args.SData.Name.ToLower() == "blindmonkqtwo")
             {
                 LeeSin._lastq2casted = Environment.TickCount;
+            }
+
+            if (args.SData.Name.ToLower() == "blindmonkqone")
+            {
+                LeeSin._lastq1casted = Environment.TickCount;
             }
 
             if (args.SData.Name == "BlindMonkRKick")
@@ -220,6 +243,16 @@ namespace Lee_Sin
         }
 
         #endregion
-    
+
+        public static void OnDoCast(Obj_AI_Base sender, GameObjectProcessSpellCastEventArgs args)
+        {
+            if (sender.IsMe)
+            {
+                if (args.SData.Name == "blindmonkqtwo" && args.Target.Type == GameObjectType.obj_AI_Hero)
+                {
+                    
+                }
+            }
+        }
     }
 }

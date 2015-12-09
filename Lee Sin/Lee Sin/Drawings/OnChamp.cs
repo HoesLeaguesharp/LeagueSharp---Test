@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using LeagueSharp;
 using LeagueSharp.Common;
+using Lee_Sin.Misc;
+using Lee_Sin.WardManager;
 using SharpDX;
 using Color = System.Drawing.Color;
 
@@ -12,7 +14,45 @@ namespace Lee_Sin.Drawings
 {
     class OnChamp : LeeSin
     {
-        public static void OnSpells(EventArgs args)
+        public  static List<Geometry.Polygon.Rectangle> _toList;
+
+        public static List<Geometry.Polygon.Rectangle> NewPoly { get; set; }
+
+        public static void DrawRect()
+        {
+            for (var a = 0; a < 360f; a ++)
+            {
+                foreach (var t in HeroManager.Enemies)
+                {   
+                    var direction = t.Direction.To2D().Perpendicular();
+                    var angle = Geometry.DegreeToRadian(a);
+                    var rotatedPosition = t.ServerPosition.To2D() + 300*direction.Rotated(angle);
+                    var extended = rotatedPosition.Extend(t.ServerPosition.To2D(), rotatedPosition.Distance(t.ServerPosition) + 300);
+                    var extend = t.ServerPosition.Extend(rotatedPosition.To3D(), 1100);
+                    
+                    var s = new Geometry.Polygon.Rectangle(t.ServerPosition, extend, t.BoundingRadius);
+                    var targets = HeroManager.Enemies.Where(x => s.IsInside(x.ServerPosition + x.BoundingRadius));
+                    if (targets.Count() >= 2)
+                    {
+
+                      //  Render.Circle.DrawCircle(extended.To3D(), 100, Color.Blue);
+                        if (Player.Distance(extended) < 400)
+                        {
+                          //  WardJump.WardJumped(extended.To3D(), true, true);
+                            Player.Spellbook.CastSpell(Player.GetSpellSlot("SummonerFlash"), extended.To3D(), true);
+                        }
+                        if (Player.Distance(extended) < 80)
+                        {                           
+                            R.Cast(t);
+                        }
+                    }
+
+                }
+            }
+        }
+
+
+        public static void OnSpells(EventArgs args) 
         {
             if (Player.IsDead) return;
 
@@ -21,15 +61,19 @@ namespace Lee_Sin.Drawings
                 UltPoly.Draw(Color.Red);
             }
 
+           // DrawRect();
+          
+
             if (_rCombo != null && GetBool("rpolygon", typeof(bool))) Render.Circle.DrawCircle((Vector3)_rCombo, 100, Color.Red, 5, true);
 
             if (GetBool("counthitr", typeof(bool)))
             {
-                var getresults = Mathematics.GetPositions(Player, 1125, (byte)3, HeroManager.Enemies);
+                var getresults = BubbaKush.GetPositions(Player, 1125, (byte)GetValue("enemiescount"), HeroManager.Enemies.Where(x => x.Distance(Player) < 1200).ToList());
                 if (getresults.Count > 1)
                 {
-                    var getposition = Mathematics.SelectBest(getresults, Player);
-                    Render.Circle.DrawCircle(getposition, 100, Color.Red, 3, true);
+                    var getposition = BubbaKush.SelectBest(getresults, Player);
+                 
+                 //   Render.Circle.DrawCircle(getposition, 100, Color.Red, 3, true);
                 }
             }
 
@@ -75,5 +119,6 @@ namespace Lee_Sin.Drawings
                 Drawing.DrawText(Drawing.WorldToScreen(Player.Position).X - 50, Drawing.WorldToScreen(Player.Position).Y + 30, Color.Magenta, "Ult Will Hit " + counts);
             }
         }
+        
     }
 }

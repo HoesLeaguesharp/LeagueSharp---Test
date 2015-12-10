@@ -25,12 +25,12 @@ namespace Lee_Sin.Insec
                 target = TargetSelector.GetSelectedTarget() == null ? target : TargetSelector.SelectedTarget;
             }
             // if (!R.IsReady() && Environment.TickCount - lastr > 2000) return;
-            
+
             if (target == null) return;
 
             LastQ(target);
-        //   Game.PrintChat(LastQ(target).ToString());
-         //   Game.PrintChat((Environment.TickCount - lastq12).ToString());
+            //   Game.PrintChat(LastQ(target).ToString());
+            //   Game.PrintChat((Environment.TickCount - lastq12).ToString());
 
             var qpred = Q.GetPrediction(target);
 
@@ -59,13 +59,14 @@ namespace Lee_Sin.Insec
             foreach (var min in
                 ObjectManager.Get<Obj_AI_Base>()
                     .Where(
-                        x => (!x.IsAlly || x.Type == GameObjectType.NeutralMinionCamp) && (!x.Name.ToLower().Contains("turret")) &&
-                            (x.Distance(target) < 380 || x.Distance(poss) < 530 || (CanWardFlash(target) && x.Distance(target) < 800))
+                        x => (!x.IsAlly || x.Type == GameObjectType.NeutralMinionCamp) && !x.Name.ToLower().Contains("turret") &&
+                            (x.Distance(target) < 380 ||
+                             x.Distance(poss) < 530 || (canwardflash && x.Distance(target) < 800))
                              && x.Health > Q.GetDamage(x) + 50 && !x.IsDead &&
                              Q.GetPrediction(x).CollisionObjects.Count == 0 && x.Distance(Player) < Q.Range))
             {
-               // minionss = min;
-               Render.Circle.DrawCircle(min.Position, 80, Color.Yellow, 5, true);
+                // minionss = min;
+                Render.Circle.DrawCircle(min.Position, 80, Color.Yellow, 5, true);
                 if (Q1() && Q.IsReady())
                 {
                     Q.Cast(min.Position);
@@ -83,12 +84,12 @@ namespace Lee_Sin.Insec
 
             if ((Steps == LeeSin.steps.WardJump || Environment.TickCount - _lastwardjump < 1500) && slot != null && W.IsReady() && R.IsReady())
             {
-                
+
                 if (target.Position.Distance(Player.Position) < 600)
                 {
                     WardManager.WardJump.WardJumped(poss.To3D(), false, false);
                     canwardflash = false;
-                    
+
                 }
                 else if (CanWardFlash(target))
                 {
@@ -147,23 +148,16 @@ namespace Lee_Sin.Insec
             if (!canwardflash) return;
 
             if (Player.ServerPosition.Distance(target.ServerPosition) < 250 || target.Distance(Player) > 750
-                || !CanWardFlash(target) || Environment.TickCount - _lastq1casted < 1000 || target.Buffs.Any(x => x.Name.ToLower().Contains("blindmonkqone")))
+                || !CanWardFlash(target) || Environment.TickCount - _lastq1casted < 200 || target.Buffs.Any(x => x.Name.ToLower().Contains("blindmonkqone")))
                 return;
 
             if (LastQ(target))
             {
-                if (!(Player.Distance(target) < 500))
-                {
-                    WardManager.WardJump.WardJumped(wardtotargetpos, false, false);
+                WardManager.WardJump.WardJumped(wardtotargetpos, false, false);
 
-                    _wardjumpedto = Environment.TickCount;
-                    _wardjumpedtotarget = true;
-                    _lastflashward = Environment.TickCount;
-                }
-                else
-                {
-                    return;
-                }
+                _wardjumpedto = Environment.TickCount;
+                _wardjumpedtotarget = true;
+                _lastflashward = Environment.TickCount;
             }
 
             #endregion
@@ -171,7 +165,7 @@ namespace Lee_Sin.Insec
             #region Q Smite
 
             var prediction = Prediction.GetPrediction(target, Q.Delay);
-           
+
             var collision = Q.GetCollision(Player.Position.To2D(),
                 new List<Vector2> { prediction.UnitPosition.To2D() });
 
@@ -181,7 +175,7 @@ namespace Lee_Sin.Insec
                 {
                     if (collision[0].IsMinion && collision[0].IsEnemy)
                     {
-                        if (!GetBool("UseSmite", typeof (bool))) return;
+                        if (!GetBool("UseSmite", typeof(bool))) return;
                         if (Q.IsReady())
                         {
                             if (collision[0].Distance(Player) < 500)

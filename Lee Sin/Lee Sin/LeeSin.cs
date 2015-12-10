@@ -80,6 +80,7 @@ namespace Lee_Sin
         protected static int Lastcastedw;
         protected static int _lastq2casted;
         protected static int _lastq1casted;
+        protected static int lastwardmanager;
         public static int lastbuff { get; set; }
         public static int lastq12 { get; set; }
         public static Obj_AI_Base minionss { get; set; }

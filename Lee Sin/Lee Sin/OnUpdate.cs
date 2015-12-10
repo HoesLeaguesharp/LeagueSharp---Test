@@ -64,9 +64,7 @@ namespace Lee_Sin
         public static
             void OnUpdated(EventArgs args)
         {
-           // Game.PrintChat((Bubba.NewPoly == null).ToString());
-       //     Bubba.GetRPosition();
-       //OnChamp.DrawRect();
+            ProcessHandler.ProcessHandlers();
             if (Player.IsRecalling() || MenuGUI.IsChatOpen) return;
 
             if (GetBool("smiteenable", typeof(KeyBind)))
@@ -123,6 +121,7 @@ namespace Lee_Sin
             if (target == null) return;
 
               LastQ(target);
+            Game.PrintChat(LastQ(target).ToString());
             //foreach (var buffs in target.Buffs)
             //{
             //    Game.PrintChat(buffs.Name);

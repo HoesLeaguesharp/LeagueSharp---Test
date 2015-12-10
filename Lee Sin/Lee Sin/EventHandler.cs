@@ -44,7 +44,7 @@ namespace Lee_Sin
             {
                 return;
             }
-            
+
             var asec = ObjectManager.Get<Obj_AI_Hero>().Where(a => a.IsEnemy && a.Distance(Game.CursorPos) < 200 && a.IsValid && !a.IsDead);
             if (asec.Any())
             {
@@ -91,21 +91,19 @@ namespace Lee_Sin
 
         public static void OnSpellcast(Obj_AI_Base sender, GameObjectProcessSpellCastEventArgs args)
         {
-            var getresults = BubbaKush.GetPositions(Player, 1125,(byte) GetValue("enemiescount"), HeroManager.Enemies.Where(x => x.Distance(Player) < 1200).ToList());
+            var getresults = BubbaKush.GetPositions(Player, 1125, (byte)GetValue("enemiescount"), HeroManager.Enemies.Where(x => x.Distance(Player) < 1200).ToList());
             if (getresults.Count > 1)
             {
-                if (GetBool("xeflash", typeof (bool)))
+                if (!GetBool("xeflash", typeof(bool))) return;
+                if (GetBool("wardinsec", typeof(KeyBind)) || Orbwalker.ActiveMode == Orbwalking.OrbwalkingMode.Combo)
+                    return;
+
+                var getposition = BubbaKush.SelectBest(getresults, Player);
+                if (args.SData.Name == "BlindMonkRKick")
                 {
-                    if (!GetBool("wardinsec", typeof (KeyBind)) &&
-                        Orbwalker.ActiveMode != Orbwalking.OrbwalkingMode.Combo)
-                    {
-                        var getposition = BubbaKush.SelectBest(getresults, Player);
-                        if (args.SData.Name == "BlindMonkRKick")
-                        {
-                            var poss = getposition;
-                            Player.Spellbook.CastSpell(Player.GetSpellSlot("SummonerFlash"), poss, true);
-                        }
-                    }
+                    var poss = getposition;
+
+                    Player.Spellbook.CastSpell(Player.GetSpellSlot("SummonerFlash"), poss, true);
                 }
             }
             if (sender.IsMe)
@@ -252,7 +250,7 @@ namespace Lee_Sin
             {
                 if (args.SData.Name == "blindmonkqtwo" && args.Target.Type == GameObjectType.obj_AI_Hero)
                 {
-                    
+
                 }
             }
         }

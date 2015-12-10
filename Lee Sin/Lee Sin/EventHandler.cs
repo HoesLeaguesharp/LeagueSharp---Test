@@ -94,16 +94,18 @@ namespace Lee_Sin
             var getresults = BubbaKush.GetPositions(Player, 1125,(byte) GetValue("enemiescount"), HeroManager.Enemies.Where(x => x.Distance(Player) < 1200).ToList());
             if (getresults.Count > 1)
             {
-                if (!GetBool("xeflash", typeof (bool))) return; 
-                if (GetBool("wardinsec", typeof (KeyBind)) || Orbwalker.ActiveMode == Orbwalking.OrbwalkingMode.Combo)
-                    return;
-
-                var getposition = BubbaKush.SelectBest(getresults, Player);
-                if (args.SData.Name == "BlindMonkRKick")
+                if (GetBool("xeflash", typeof (bool)))
                 {
-                    var poss = getposition;
-
-                    Player.Spellbook.CastSpell(Player.GetSpellSlot("SummonerFlash"), poss, true);
+                    if (!GetBool("wardinsec", typeof (KeyBind)) &&
+                        Orbwalker.ActiveMode != Orbwalking.OrbwalkingMode.Combo)
+                    {
+                        var getposition = BubbaKush.SelectBest(getresults, Player);
+                        if (args.SData.Name == "BlindMonkRKick")
+                        {
+                            var poss = getposition;
+                            Player.Spellbook.CastSpell(Player.GetSpellSlot("SummonerFlash"), poss, true);
+                        }
+                    }
                 }
             }
             if (sender.IsMe)

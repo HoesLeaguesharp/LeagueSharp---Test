@@ -18,7 +18,7 @@ namespace Lee_Sin.WardManager
                     .FirstOrDefault(
                         x =>
                             x.IsValid && x.Distance(position) < 200 && x.IsAlly && !x.IsDead &&
-                            !x.Name.ToLower().Contains("turret") && !x.IsMe);
+                            !x.Name.ToLower().Contains("turret"));
 
             var ward = Items.GetWardSlot();
             if (objectuse)
@@ -32,7 +32,6 @@ namespace Lee_Sin.WardManager
                     if (W.IsReady() && ward != null && W1() && use && Environment.TickCount - Lastcastedw > 400)
                     {
                         Player.Spellbook.CastSpell(ward.SpellSlot, position);
-                        LeeSin.Lastcastedw = Environment.TickCount;
                     }
                 }
             }
@@ -45,7 +44,6 @@ namespace Lee_Sin.WardManager
                 if (W.IsReady() && ward != null && W1() && use && Environment.TickCount - Lastcastedw > 400)
                 {
                     Player.Spellbook.CastSpell(ward.SpellSlot, position);
-
                 }
             }
 

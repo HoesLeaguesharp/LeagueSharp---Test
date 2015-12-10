@@ -109,7 +109,36 @@ namespace Lee_Sin.Insec
                 lastflashoverprio = Environment.TickCount;
                 R.Cast(target);
             }
+            #region Q Smite
 
+            var prediction = Prediction.GetPrediction(target, Q.Delay);
+
+            var collision = Q.GetCollision(Player.Position.To2D(),
+                new List<Vector2> { prediction.UnitPosition.To2D() });
+
+            foreach (var collisions in collision)
+            {
+                if (collision.Count == 1)
+                {
+                    if (collision[0].IsMinion && collision[0].IsEnemy)
+                    {
+                        if (!GetBool("UseSmite", typeof(bool))) return;
+                        if (Q.IsReady())
+                        {
+                            if (collision[0].Distance(Player) < 500)
+                            {
+                                if (collision[0].Health <= ActiveModes.Smite.GetFuckingSmiteDamage() && Smite.IsReady())
+                                {
+                                    Q.Cast(prediction.CastPosition);
+                                    Player.Spellbook.CastSpell(Smite, collision[0]);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            #endregion
             #region Determine if we want to flash or ward jump
 
             if (R.IsReady())
@@ -158,37 +187,6 @@ namespace Lee_Sin.Insec
                 _wardjumpedto = Environment.TickCount;
                 _wardjumpedtotarget = true;
                 _lastflashward = Environment.TickCount;
-            }
-
-            #endregion
-
-            #region Q Smite
-
-            var prediction = Prediction.GetPrediction(target, Q.Delay);
-
-            var collision = Q.GetCollision(Player.Position.To2D(),
-                new List<Vector2> { prediction.UnitPosition.To2D() });
-
-            foreach (var collisions in collision)
-            {
-                if (collision.Count == 1)
-                {
-                    if (collision[0].IsMinion && collision[0].IsEnemy)
-                    {
-                        if (!GetBool("UseSmite", typeof(bool))) return;
-                        if (Q.IsReady())
-                        {
-                            if (collision[0].Distance(Player) < 500)
-                            {
-                                if (collision[0].Health <= ActiveModes.Smite.GetFuckingSmiteDamage() && Smite.IsReady())
-                                {
-                                    Q.Cast(prediction.CastPosition);
-                                    Player.Spellbook.CastSpell(Smite, collision[0]);
-                                }
-                            }
-                        }
-                    }
-                }
             }
 
             #endregion

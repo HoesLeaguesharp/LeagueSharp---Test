@@ -49,11 +49,12 @@ namespace Lee_Sin
                 AddBool(combo, "Use [E]", "usee");
                 AddBool(combo, "Use [R]", "user");
                 AddValue(combo, "Auto [R] On X targets", "autoron", 1, 0, 5);
-                var rmenu = new Menu("Auto R on X Enemies", "autorxenemies");
+                var rmenu = new Menu("Bubba Kush", "autorxenemies");
                 {
+                    AddKeyBind(rmenu, "Activate", "activatebubba", 'T', KeyBindType.Press);
                     AddBool(rmenu, "Use ward", "xeward");
                     AddBool(rmenu, "Use flash", "xeflash");
-                    AddValue(rmenu, "Min enemies hit", "enemiescount", 3, 0, 5);
+                    AddValue(rmenu, "Min enemies hit", "enemiescount", 3, 1, 5);
                     combo.AddSubMenu(rmenu);
                 }
                 AddBool(combo, "Use [W]", "wardjumpcombo");

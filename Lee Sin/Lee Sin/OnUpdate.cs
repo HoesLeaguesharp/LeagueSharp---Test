@@ -11,7 +11,7 @@ using Lee_Sin.Drawings;
 using Lee_Sin.Misc;
 using Prediction = Lee_Sin.Prediction;
 
-namespace Lee_Sin 
+namespace Lee_Sin
 {
     class OnUpdate : LeeSin
     {
@@ -43,7 +43,6 @@ namespace Lee_Sin
                         poutput2.Hitchance == HitChance.Dashing)
                     {
                         QWER.Cast(poutput2.CastPosition);
-                        //Render.Circle.DrawCircle(poutput2.CastPosition, 100, Color.AliceBlue);
                     }
                     break;
                 }
@@ -53,7 +52,7 @@ namespace Lee_Sin
                         pred.Hitchance == LeagueSharp.Common.HitChance.Immobile)
                     {
                         if (pred.CollisionObjects.Count == 0)
-                        Q.Cast(pred.CastPosition);
+                            Q.Cast(pred.CastPosition);
                     }
                     break;
             }
@@ -64,25 +63,26 @@ namespace Lee_Sin
         public static
             void OnUpdated(EventArgs args)
         {
-             ProcessHandler.ProcessHandlers();
+            ProcessHandler.ProcessHandlers();
+         //   Game.PrintChat(Insec.InsecTo.canwardflash.ToString());
             if (Player.IsRecalling() || MenuGUI.IsChatOpen) return;
 
-            if (GetBool("smiteenable", typeof(KeyBind)))
+            if (GetBool("smiteenable", typeof (KeyBind)))
             {
                 ActiveModes.Smite.AutoSmite();
             }
-            if (GetBool("wardjump", typeof(KeyBind)))
+            if (GetBool("wardjump", typeof (KeyBind)))
             {
                 Player.IssueOrder(GameObjectOrder.MoveTo, Game.CursorPos);
                 WardManager.WardJump.WardJumped(Player.Position.Extend(Game.CursorPos, 590), true, true);
             }
 
-            if (GetBool("wardinsec", typeof(KeyBind)))
+            if (GetBool("wardinsec", typeof (KeyBind)))
             {
                 Insec.InsecTo.insec();
             }
 
-            if (GetBool("starcombo", typeof(KeyBind)))
+            if (GetBool("starcombo", typeof (KeyBind)))
             {
                 ActiveModes.Star.StarCombo();
             }
@@ -104,30 +104,21 @@ namespace Lee_Sin
                     LaneClear.LastHit();
                     break;
             }
-          //  BubbaKush.AutoWardUlt();
             AutoUlt.AutoUlti();
-
-            //LeeSin.LastQ();
-            //Game.PrintChat("Last Q1 : {0}", (Environment.TickCount - lastq12).ToString());
-            //Game.PrintChat("Last Q2 : {0}", (Environment.TickCount - _lastq2casted).ToString());
-
+            if (GetBool("activatebubba", typeof (KeyBind)))
+            {
+                Player.IssueOrder(GameObjectOrder.MoveTo, Game.CursorPos);
+                BubbaKush.DrawRect();
+            }
             var target = TargetSelector.GetTarget(Q.Range + 800, TargetSelector.DamageType.Physical);
             if (target != null)
             {
                 target = TargetSelector.GetSelectedTarget() == null ? target : TargetSelector.SelectedTarget;
+
+                if (target == null) return;
+                LastQ(target);
+                CanWardFlash(target);
             }
-            // if (!R.IsReady() && Environment.TickCount - lastr > 2000) return;
-
-            if (target == null) return;
-
-             LastQ(target);
-            //Game.PrintChat(LastQ(target).ToString());
-            //foreach (var buffs in target.Buffs)
-            //{
-            //    Game.PrintChat(buffs.Name);
-            //}
-            //Game.PrintChat(LastQ(target).ToString());
-
         }
     }
 }

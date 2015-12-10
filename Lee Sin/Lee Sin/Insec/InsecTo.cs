@@ -147,7 +147,7 @@ namespace Lee_Sin.Insec
             if (!canwardflash) return;
 
             if (Player.ServerPosition.Distance(target.ServerPosition) < 250 || target.Distance(Player) > 750
-                || !CanWardFlash(target) || Environment.TickCount - _lastq1casted < 200 || target.Buffs.Any(x => x.Name.ToLower().Contains("blindmonkqone")))
+                || !CanWardFlash(target) || Environment.TickCount - _lastq1casted < 1000 || target.Buffs.Any(x => x.Name.ToLower().Contains("blindmonkqone")))
                 return;
 
             if (LastQ(target))

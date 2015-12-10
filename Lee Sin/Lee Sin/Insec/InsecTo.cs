@@ -59,9 +59,9 @@ namespace Lee_Sin.Insec
             foreach (var min in
                 ObjectManager.Get<Obj_AI_Base>()
                     .Where(
-                        x => (!x.IsAlly || x.Type == GameObjectType.NeutralMinionCamp) && !x.Name.ToLower().Contains("turret") &&
+                        x => !x.IsAlly && 
                             (x.Distance(target) < 380 ||
-                             x.Distance(poss) < 530 || (canwardflash && x.Distance(target) < 800))
+                             x.Distance(poss) < 530 || (CanWardFlash(target) && x.Distance(target) < 800))
                              && x.Health > Q.GetDamage(x) + 50 && !x.IsDead &&
                              Q.GetPrediction(x).CollisionObjects.Count == 0 && x.Distance(Player) < Q.Range))
             {

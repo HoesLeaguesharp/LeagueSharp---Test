@@ -152,11 +152,18 @@ namespace Lee_Sin.Insec
 
             if (LastQ(target))
             {
+                if (!(Player.Distance(target) < 500))
+                {
                     WardManager.WardJump.WardJumped(wardtotargetpos, false, false);
 
                     _wardjumpedto = Environment.TickCount;
                     _wardjumpedtotarget = true;
-                    _lastflashward = Environment.TickCount;  
+                    _lastflashward = Environment.TickCount;
+                }
+                else
+                {
+                    return;
+                }
             }
 
             #endregion

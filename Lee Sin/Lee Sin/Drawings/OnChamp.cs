@@ -34,11 +34,8 @@ namespace Lee_Sin.Drawings
                     var targets = HeroManager.Enemies.Where(x => s.IsInside(x.ServerPosition + x.BoundingRadius));
                     if (targets.Count() >= 2)
                     {
-
-                      //  Render.Circle.DrawCircle(extended.To3D(), 100, Color.Blue);
                         if (Player.Distance(extended) < 400)
                         {
-                          //  WardJump.WardJumped(extended.To3D(), true, true);
                             Player.Spellbook.CastSpell(Player.GetSpellSlot("SummonerFlash"), extended.To3D(), true);
                         }
                         if (Player.Distance(extended) < 80)
